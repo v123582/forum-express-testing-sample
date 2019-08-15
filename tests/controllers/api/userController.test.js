@@ -17,12 +17,12 @@ describe('# User controller api', function() {
 
       before(async function() {
         // 在所有測試開始前會執行的程式碼區塊
-        await db.User.destroy({where: {},truncate: true})
+        await db.User.destroy({where: {},truncate: { cascade: true }})
       });
 
       after(async function() {
         // 在所有測試結束後會執行的程式碼區塊
-        await db.User.destroy({where: {},truncate: true})
+        await db.User.destroy({where: {},truncate: { cascade: true }})
       });
 
       it("(O) 註冊帳號成功", (done) => {
@@ -82,12 +82,12 @@ describe('# User controller api', function() {
 
       before(async function() {
         // 在所有測試開始前會執行的程式碼區塊
-        await db.User.destroy({where: {},truncate: true})
+        await db.User.destroy({where: {},truncate: { cascade: true }})
       });
 
       after(async function() {
         // 在所有測試結束後會執行的程式碼區塊
-        await db.User.destroy({where: {},truncate: true})
+        await db.User.destroy({where: {},truncate: { cascade: true }})
       });
 
       it("(O) 先註冊，再登入成功", (done) => {
@@ -177,7 +177,7 @@ describe('# User controller api', function() {
 
       before(async function() {
         // 在所有測試開始前會執行的程式碼區塊
-        await db.User.destroy({where: {},truncate: true})
+        await db.User.destroy({where: {},truncate: { cascade: true }})
         await db.User.create({name: 'root'})
         await db.User.create({name: 'user1'})
         await db.User.create({name: 'user2'})
@@ -185,7 +185,7 @@ describe('# User controller api', function() {
 
       after(async function() {
         // 在所有測試結束後會執行的程式碼區塊
-        await db.User.destroy({where: {},truncate: true})
+        await db.User.destroy({where: {},truncate: { cascade: true }})
       });
 
       it("(X) 未登入，無法取得 Top Users", (done) => {
@@ -203,7 +203,7 @@ describe('# User controller api', function() {
 
       before(async function() {
         // 在所有測試開始前會執行的程式碼區塊
-        await db.User.destroy({where: {},truncate: true})
+        await db.User.destroy({where: {},truncate: { cascade: true }})
         const rootUser = await db.User.create({name: 'root'})
         await db.User.create({name: 'user1'})
         await db.User.create({name: 'user2'})
@@ -217,7 +217,7 @@ describe('# User controller api', function() {
 
       after(async function() {
         // 在所有測試結束後會執行的程式碼區塊
-        await db.User.destroy({where: {},truncate: true})
+        await db.User.destroy({where: {},truncate: { cascade: true }})
         this.authenticate.restore();
       });
 
