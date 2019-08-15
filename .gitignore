@@ -2,6 +2,7 @@
 node_modules/ 
 temp/
 upload/
+coverage/
 
 .DS_Store
 .env
