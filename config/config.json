@@ -14,11 +14,10 @@
     "logging": false
   },
   "production": {
-    "use_env_variable": "DATABASE_URL",
-    "dialect": "postgres",
-    "protocol": "postgres",
-    "dialectOptions": {
-      "ssl": true
-    }
+    "username": "be0604064d1e0d",
+    "password": "c4569118",
+    "database": "heroku_933ed01e41d0ba1",
+    "host": "us-cdbr-iron-east-02.cleardb.net",
+    "dialect": "mysql"
   }
 }
