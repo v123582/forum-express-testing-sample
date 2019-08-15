@@ -1,0 +1,6 @@
+{
+  "include": [
+    "controllers/userController.js",
+    "controllers/api/userController.js"
+  ]
+}
