@@ -77,12 +77,7 @@ describe('/api/signup', () => {
         request(app)
           .post('/signup')
           .send('name=name1&email=email1&password=password1&passwordCheck=password')
-          .redirects(1)
           .end(function(err, res) {
-            
-            // 條件一
-            expect(res.text).to.contain('<h1 class="h3 mb-3 font-weight-normal">Sign Up</h1>')
-
 
             db.User.findOne({
               where: {
@@ -91,21 +86,38 @@ describe('/api/signup', () => {
             }).then((user) => {  
               // 條件二：不會寫入資料庫
               expect(user).to.be.equal(null)
-              done()
             })
+
+            cookie = res.headers['set-cookie'];
+            request(app)
+              .post('/signup')
+              .send('name=name1&email=email1&password=password1&passwordCheck=password')
+              .set('cookie', cookie)
+              .redirects(1)
+              .end(function(err, res) {
+                expect(res.text).to.contain('兩次密碼輸入不同！') 
+                done()
+            });
         });
     });
 
     it("(X) 信箱重複", (done) => {
+        let cookie;
         request(app)
           .post('/signup')
           .send('name=name&email=email&password=password&passwordCheck=password')
-          .redirects(1)
           .end(function(err, res) {
 
-            // 條件一
-            expect(res.text).to.contain('<h1 class="h3 mb-3 font-weight-normal">Sign Up</h1>')
-            done()
+            cookie = res.headers['set-cookie'];
+            request(app)
+              .post('/signup')
+              .send('name=name&email=email&password=password&passwordCheck=password')
+              .set('cookie', cookie)
+              .redirects(1)
+              .end(function(err, res) {
+                expect(res.text).to.contain('信箱重複！') 
+                done()
+            });
         });
     });
 })
@@ -147,15 +159,24 @@ describe('/api/signin', () => {
     });
 
     it("(X) 找不到用戶", (done) => {
+        let cookie;
         request(app)
           .post('/signIn')
           .send('email=email2&password=password')
-          .redirects(1)
           .end(function(err, res) {
-            expect(res.statusCode).to.be.equal(200) 
-            expect(res.text).to.contain('<h1 class="h3 mb-3 font-weight-normal">Sign In</h1>') 
-            done()
+            
+            cookie = res.headers['set-cookie'];
+            request(app)
+              .post('/signIn')
+              .send('email=email2&password=password')
+              .set('cookie', cookie)
+              .redirects(1)
+              .end(function(err, res) {
+                expect(res.text).to.contain('帳號或密碼輸入錯誤') 
+                done()
+            });
         });
     });
+
 })
 
